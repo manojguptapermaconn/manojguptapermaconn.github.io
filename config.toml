@@ -1,0 +1,66 @@
+baseURL = "https://manojguptapermaconn.github.io/"
+languageCode = "en-us"
+title = "Manoj Gupta"
+theme = "PaperMod"
+
+[pagination]
+pagerSize = 10
+
+[params]
+author = "Manoj Gupta"
+description = "Senior Software Engineer | C++ | Distributed Systems | System Design"
+ShowReadingTime = true
+ShowShareButtons = true
+ShowCodeCopyButtons = true
+ShowBreadCrumbs = true
+ShowPostNavLinks = true
+ShowToc = true
+
+[params.profileMode]
+enabled = true
+title = "Manoj Gupta"
+subtitle = "Senior Software Engineer specializing in C++, Distributed Systems, Performance Engineering and Backend Development."
+
+imageUrl = "/profile.jpg"
+imageTitle = "Manoj Gupta"
+
+[[params.socialIcons]]
+name = "github"
+url = "https://github.com/yourusername"
+
+[[params.socialIcons]]
+name = "linkedin"
+url = "https://linkedin.com/in/yourprofile"
+
+[[params.socialIcons]]
+name = "email"
+url = "mailto:you@email.com"
+
+[[menu.main]]
+identifier = "blog"
+name = "Blog"
+url = "/posts/"
+weight = 10
+
+[[menu.main]]
+identifier = "tutorials"
+name = "Tutorials"
+url = "/tutorials/"
+weight = 20
+
+[[menu.main]]
+identifier = "projects"
+name = "Projects"
+url = "/projects/"
+weight = 30
+
+[[menu.main]]
+identifier = "about"
+name = "About"
+url = "/about/"
+weight = 40
+
+[markup]
+  [markup.highlight]
+    style = "github"
+    lineNos = true
