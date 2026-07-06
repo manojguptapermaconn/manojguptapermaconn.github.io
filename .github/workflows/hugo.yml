@@ -1,4 +1,5 @@
 name: Deploy Hugo Site
+run-name: "Deploy: ${{ github.event.head_commit.message || format('manual trigger on {0}', github.ref_name) }}"
 
 on:
   push:
