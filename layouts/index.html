@@ -4,7 +4,7 @@
 {{- $postCount := len $posts }}
 
 <header class="page-header">
-  <h1>What do you want to prep?</h1>
+  <h2>What do you want to prep?</h2>
   <div class="post-description">
     In-depth guides on C++, Data Structures &amp; Algorithms, and System Design — written by engineers, for engineers. {{ $postCount }} article{{ if ne $postCount 1 }}s{{ end }} so far.
   </div>
@@ -81,7 +81,7 @@ if (auto tmp = wp.lock()) {
 <p><a href="{{ "/posts/cpp-smart-pointers/" | absLangURL }}">Read the full smart pointers guide →</a></p>
 
 <header class="page-header">
-  <h1>Latest articles</h1>
+  <h2>Latest articles</h2>
 </header>
 
 {{- range $posts }}
@@ -100,7 +100,7 @@ if (auto tmp = wp.lock()) {
 {{- end }}
 
 <header class="page-header">
-  <h1>Interview tips</h1>
+  <h2>Interview tips</h2>
 </header>
 <ul class="home-tips">
   <li>Understand ownership semantics — interviewers always probe memory management.</li>
