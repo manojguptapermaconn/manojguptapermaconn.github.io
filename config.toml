@@ -29,15 +29,15 @@ imageTitle = "Manoj Gupta"
 
 [[params.socialIcons]]
 name = "github"
-url = "https://github.com/yourusername"
+url = "https://github.com/manojguptapermaconn/manojguptapermaconn.github.io"
 
 [[params.socialIcons]]
 name = "linkedin"
-url = "https://linkedin.com/in/yourprofile"
+url = "https://www.linkedin.com/in/manojgupta09/"
 
 [[params.socialIcons]]
 name = "email"
-url = "mailto:you@email.com"
+url = "mailto:manojguptalondon@gmail.com"
 
 [[menu.main]]
 identifier = "about"
