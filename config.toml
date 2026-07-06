@@ -16,6 +16,9 @@ ShowBreadCrumbs = true
 ShowPostNavLinks = true
 ShowToc = true
 
+[params.label]
+text = "Home"
+
 [params.profileMode]
 enabled = true
 title = "Manoj Gupta"

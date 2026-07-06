@@ -1,7 +1,5 @@
 {{- define "main" }}
 
-{{- partial "index_profile.html" . }}
-
 {{- $posts := (where site.RegularPages "Section" "posts").ByDate.Reverse }}
 {{- $postCount := len $posts }}
 
@@ -105,5 +103,10 @@ if (auto tmp = wp.lock()) {
   <li>Know the trade-offs: unique_ptr vs shared_ptr, heap vs stack.</li>
   <li>Practice drawing diagrams for system design questions.</li>
 </ul>
+
+<div class="home-author-note">
+  <p>Written by {{ site.Params.profileMode.title | default site.Title }} — {{ site.Params.profileMode.subtitle | plainify }}</p>
+  {{- partial "social_icons.html" }}
+</div>
 
 {{- end }}
