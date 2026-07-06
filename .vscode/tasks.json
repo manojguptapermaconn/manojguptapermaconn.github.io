@@ -1,0 +1,35 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Hugo: Serve (drafts)",
+      "type": "shell",
+      "command": "hugo server -D",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "Hugo: Build",
+      "type": "shell",
+      "command": "hugo --minify",
+      "problemMatcher": []
+    },
+    {
+      "label": "Hugo: New Post",
+      "type": "shell",
+      "command": "hugo new posts/${input:postName}.md",
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "postName",
+      "type": "promptString",
+      "description": "New post filename (without .md)"
+    }
+  ]
+}

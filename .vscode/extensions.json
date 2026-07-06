@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "budparr.language-hugo-vscode",
+    "eliostruyf.vscode-front-matter",
+    "tamasfe.even-better-toml",
+    "davidanson.vscode-markdownlint",
+    "yzhang.markdown-all-in-one",
+    "streetsidesoftware.code-spell-checker"
+  ]
+}

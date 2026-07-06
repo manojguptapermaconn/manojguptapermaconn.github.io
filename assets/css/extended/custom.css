@@ -1,0 +1,131 @@
+/* Off-white background for fenced code blocks (light mode only) */
+:root {
+    --code-block-bg: #FAF6EE;
+}
+
+:root:not([data-theme="dark"]) .chroma {
+    color: #24292e;
+}
+
+:root:not([data-theme="dark"]) .chroma .lnt,
+:root:not([data-theme="dark"]) .chroma .ln {
+    color: #99958c;
+}
+
+:root:not([data-theme="dark"]) .chroma .hl {
+    background-color: #f0ead9;
+}
+
+:root:not([data-theme="dark"]) .chroma .k,
+:root:not([data-theme="dark"]) .chroma .kc,
+:root:not([data-theme="dark"]) .chroma .kd,
+:root:not([data-theme="dark"]) .chroma .kn,
+:root:not([data-theme="dark"]) .chroma .kp,
+:root:not([data-theme="dark"]) .chroma .kr,
+:root:not([data-theme="dark"]) .chroma .kt {
+    color: #d73a49;
+}
+
+:root:not([data-theme="dark"]) .chroma .cp,
+:root:not([data-theme="dark"]) .chroma .cpf {
+    color: #6f42c1;
+    font-style: italic;
+}
+
+:root:not([data-theme="dark"]) .chroma .c,
+:root:not([data-theme="dark"]) .chroma .ch,
+:root:not([data-theme="dark"]) .chroma .cm,
+:root:not([data-theme="dark"]) .chroma .c1,
+:root:not([data-theme="dark"]) .chroma .cs {
+    color: #6a737d;
+    font-style: italic;
+}
+
+:root:not([data-theme="dark"]) .chroma .s,
+:root:not([data-theme="dark"]) .chroma .sa,
+:root:not([data-theme="dark"]) .chroma .sb,
+:root:not([data-theme="dark"]) .chroma .sc,
+:root:not([data-theme="dark"]) .chroma .dl,
+:root:not([data-theme="dark"]) .chroma .sd,
+:root:not([data-theme="dark"]) .chroma .s2,
+:root:not([data-theme="dark"]) .chroma .se,
+:root:not([data-theme="dark"]) .chroma .sh,
+:root:not([data-theme="dark"]) .chroma .si,
+:root:not([data-theme="dark"]) .chroma .sx,
+:root:not([data-theme="dark"]) .chroma .sr,
+:root:not([data-theme="dark"]) .chroma .s1,
+:root:not([data-theme="dark"]) .chroma .ss {
+    color: #032f62;
+}
+
+:root:not([data-theme="dark"]) .chroma .n,
+:root:not([data-theme="dark"]) .chroma .nx,
+:root:not([data-theme="dark"]) .chroma .p,
+:root:not([data-theme="dark"]) .chroma .g {
+    color: #24292e;
+}
+
+:root:not([data-theme="dark"]) .chroma .nf,
+:root:not([data-theme="dark"]) .chroma .fm,
+:root:not([data-theme="dark"]) .chroma .nc,
+:root:not([data-theme="dark"]) .chroma .nd {
+    color: #6f42c1;
+}
+
+:root:not([data-theme="dark"]) .chroma .nb,
+:root:not([data-theme="dark"]) .chroma .bp,
+:root:not([data-theme="dark"]) .chroma .na,
+:root:not([data-theme="dark"]) .chroma .nl,
+:root:not([data-theme="dark"]) .chroma .nn,
+:root:not([data-theme="dark"]) .chroma .ne,
+:root:not([data-theme="dark"]) .chroma .py,
+:root:not([data-theme="dark"]) .chroma .nt {
+    color: #005cc5;
+}
+
+:root:not([data-theme="dark"]) .chroma .nv,
+:root:not([data-theme="dark"]) .chroma .vc,
+:root:not([data-theme="dark"]) .chroma .vg,
+:root:not([data-theme="dark"]) .chroma .vi,
+:root:not([data-theme="dark"]) .chroma .vm,
+:root:not([data-theme="dark"]) .chroma .no {
+    color: #e36209;
+}
+
+:root:not([data-theme="dark"]) .chroma .m,
+:root:not([data-theme="dark"]) .chroma .mb,
+:root:not([data-theme="dark"]) .chroma .mf,
+:root:not([data-theme="dark"]) .chroma .mh,
+:root:not([data-theme="dark"]) .chroma .mi,
+:root:not([data-theme="dark"]) .chroma .il,
+:root:not([data-theme="dark"]) .chroma .mo {
+    color: #005cc5;
+}
+
+:root:not([data-theme="dark"]) .chroma .o,
+:root:not([data-theme="dark"]) .chroma .ow {
+    color: #d73a49;
+    font-weight: normal;
+}
+
+:root:not([data-theme="dark"]) .chroma .gd {
+    color: #b31d28;
+    background-color: #ffeef0;
+}
+
+:root:not([data-theme="dark"]) .chroma .gi {
+    color: #22863a;
+    background-color: #f0fff4;
+}
+
+:root:not([data-theme="dark"]) .chroma .gh,
+:root:not([data-theme="dark"]) .chroma .gu {
+    color: #6f42c1;
+    font-weight: bold;
+}
+
+:root:not([data-theme="dark"]) .chroma .gr,
+:root:not([data-theme="dark"]) .chroma .gt,
+:root:not([data-theme="dark"]) .chroma .err {
+    color: #b31d28;
+}
