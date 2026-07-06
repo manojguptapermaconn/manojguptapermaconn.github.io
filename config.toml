@@ -47,12 +47,16 @@ identifier = "tutorials"
 name = "Tutorials"
 url = "/tutorials/"
 weight = 20
+[menu.main.params]
+disabled = true
 
 [[menu.main]]
 identifier = "projects"
 name = "Projects"
 url = "/projects/"
 weight = 30
+[menu.main.params]
+disabled = true
 
 [[menu.main]]
 identifier = "about"

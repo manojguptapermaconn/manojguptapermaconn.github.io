@@ -4,6 +4,14 @@
     --code-block-bg: #FAF6EE;
 }
 
+/* Disabled (coming soon) nav items — visible but not clickable */
+.menu-disabled {
+    color: var(--secondary);
+    opacity: 0.5;
+    cursor: not-allowed;
+    user-select: none;
+}
+
 .chroma {
     color: #24292e;
 }
