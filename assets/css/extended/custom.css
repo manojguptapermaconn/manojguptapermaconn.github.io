@@ -12,6 +12,52 @@
     user-select: none;
 }
 
+/* Home page topic cards */
+.home-topics {
+    display: grid;
+    gap: var(--gap);
+    margin-bottom: calc(var(--gap) * 2);
+}
+
+.home-topic .entry-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.home-topic-disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.home-topic-disabled:hover {
+    transform: none !important;
+}
+
+.post-tags .home-tag {
+    display: block;
+    padding: 0 14px;
+    color: var(--secondary);
+    font-size: 14px;
+    line-height: 34px;
+    background: var(--code-bg);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+}
+
+.home-tips {
+    margin: 0 0 calc(var(--gap) * 2);
+    padding-inline-start: 1.2em;
+    color: var(--content);
+}
+
+.home-tips li {
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
 .chroma {
     color: #24292e;
 }
