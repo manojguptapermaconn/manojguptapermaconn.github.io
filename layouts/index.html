@@ -54,11 +54,15 @@
 </div>
 
 <header class="page-header">
-  <h1>Smart Pointers at a glance</h1>
+  <h2>Smart Pointers at a glance</h2>
+  <p>Smart pointers help manage dynamic memory safely and automatically, reducing memory leaks and ownership-related bugs.</p>
 </header>
 
+<div class="md-content">
 {{- highlight `#include <memory>
-
+class Foo {
+  ...
+};
 // unique_ptr — exclusive ownership
 auto p1 = std::make_unique<Foo>();
 auto p2 = std::move(p1);  // transfer ownership
@@ -72,6 +76,7 @@ std::weak_ptr<Foo> wp = sp1;
 if (auto tmp = wp.lock()) {
     // safe to use tmp here
 }` "cpp" "linenos=table" }}
+</div>
 
 <p><a href="{{ "/posts/cpp-smart-pointers/" | absLangURL }}">Read the full smart pointers guide →</a></p>
 
