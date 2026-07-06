@@ -64,3 +64,4 @@ weight = 40
   [markup.highlight]
     style = "github"
     lineNos = true
+    noClasses = false
