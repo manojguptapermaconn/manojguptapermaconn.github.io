@@ -37,16 +37,22 @@ name = "email"
 url = "mailto:you@email.com"
 
 [[menu.main]]
+identifier = "about"
+name = "About"
+url = "/about/"
+weight = 10
+
+[[menu.main]]
 identifier = "blog"
 name = "Blog"
 url = "/posts/"
-weight = 10
+weight = 20
 
 [[menu.main]]
 identifier = "tutorials"
 name = "Tutorials"
 url = "/tutorials/"
-weight = 20
+weight = 30
 [menu.main.params]
 disabled = true
 
@@ -54,15 +60,9 @@ disabled = true
 identifier = "projects"
 name = "Projects"
 url = "/projects/"
-weight = 30
+weight = 40
 [menu.main.params]
 disabled = true
-
-[[menu.main]]
-identifier = "about"
-name = "About"
-url = "/about/"
-weight = 40
 
 [markup]
   [markup.highlight]
