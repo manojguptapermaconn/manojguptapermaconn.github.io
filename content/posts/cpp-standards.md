@@ -61,7 +61,21 @@ int threshold = 10;
 auto isAboveThreshold = [threshold](int x) { return x > threshold; };
 ```
 
-Interview angle: know the difference between capture by value `[x]`, by reference `[&x]`, and capture-all `[=]` / `[&]`.
+Beyond capturing individual variables by value (`[x]`) or reference (`[&x]`), a lambda can capture everything it uses with a default:
+
+```cpp
+int threshold = 10;
+int count = 0;
+auto f = [=, &count](int x) {
+    if (x > threshold) count++;   // threshold: copied in, count: by reference
+};
+```
+
+- `[=]` — capture everything used in the body **by value** (a copy each).
+- `[&]` — capture everything used in the body **by reference**.
+- Defaults can be mixed with explicit exceptions, e.g. `[=, &count]` or `[&, threshold]`.
+
+Interview angle: `[&]` capturing locals in a lambda that outlives its enclosing scope (returned from a function, or stored and invoked later) leaves dangling references — a common source of bugs.
 
 ### 6. Scoped enumerations (`enum class`)
 
@@ -77,12 +91,15 @@ Color c = Color::Red;
 
 `override` tells the compiler a function is meant to override a virtual base method — catches typos/signature mismatches at compile time instead of silently creating a new function. `final` prevents further overriding or inheritance.
 
+The base class function **must already be `virtual`** for `override` to compile. `override` doesn't make a function overridable by itself — it's a compiler-checked assertion that a matching virtual function (same name, parameters, const/ref-qualifiers, and a covariant return type) already exists in a base class. If it doesn't — because the base function isn't `virtual`, or the signature is slightly off — the compiler rejects the code instead of silently creating an unrelated new function that just hides the base one.
+
 ```cpp
 struct Base {
-    virtual void speak() const;
+    virtual void speak() const;   // must be virtual
 };
 struct Derived : Base {
-    void speak() const override;  // compiler-checked
+    void speak() const override;  // OK — matches Base::speak exactly
+    // void speak() override;     // ERROR: missing const, doesn't match — caught at compile time
 };
 ```
 
@@ -97,7 +114,68 @@ struct Point { int x, y; };
 Point p{1, 2};
 ```
 
-### 9. `constexpr`
+### 9. `std::initializer_list`
+
+A lightweight, non-owning view over a braced list of values (`{1, 2, 3}`), letting constructors and functions accept that syntax directly.
+
+```cpp
+class MyContainer {
+public:
+    MyContainer(std::initializer_list<int> list) {
+        for (int v : list) { /* ... */ }
+    }
+};
+MyContainer c = {1, 2, 3, 4};
+```
+
+Interview angle: if a class has both a `(size_t, T)` constructor and an `initializer_list` constructor, brace syntax always prefers the `initializer_list` one — a classic gotcha:
+
+```cpp
+std::vector<int> a(10, 5); // 10 elements, each = 5
+std::vector<int> b{10, 5}; // 2 elements: {10, 5}  — initializer_list wins
+```
+
+### 10. Delegating constructors
+
+One constructor can call another constructor of the *same* class in its member-init list, instead of duplicating initialization logic.
+
+```cpp
+class Rectangle {
+    int width, height;
+public:
+    Rectangle(int w, int h) : width(w), height(h) {}
+    Rectangle() : Rectangle(1, 1) {}   // delegates to the two-arg constructor
+};
+```
+
+Rule: if a constructor delegates, that delegation must be the *only* entry in its member-init list — you can't delegate and also initialize other members in the same list. The delegated-to constructor runs to completion (including its body) before control returns to the delegating constructor's own body.
+
+### 11. Variadic templates
+
+Templates that accept an arbitrary number of type parameters via a **parameter pack** (`typename... Args` / `Args... args`). Pre-C++17, processing the arguments typically means recursing, peeling off one at a time:
+
+```cpp
+void print() {}  // base case: no more args
+
+template<typename T, typename... Rest>
+void print(T first, Rest... rest) {
+    std::cout << first << " ";
+    print(rest...);  // recurse with one fewer argument
+}
+```
+
+C++17's fold expressions do the same thing without recursion:
+
+```cpp
+template<typename... Args>
+void print(Args... args) {
+    ((std::cout << args << " "), ...);  // unary right fold over the comma operator
+}
+```
+
+`sizeof...(Args)` gives the pack size at compile time. This machinery underlies `std::make_unique`, `vector::emplace_back`, and `std::tuple`.
+
+### 12. `constexpr`
 
 Marks a function or variable as computable at compile time (given constant inputs), moving work from runtime to compile time.
 
@@ -106,7 +184,7 @@ constexpr int square(int x) { return x * x; }
 constexpr int result = square(5);  // computed at compile time
 ```
 
-### 10. Standard threading support
+### 13. Standard threading support
 
 `<thread>`, `<mutex>`, `<atomic>`, and `<condition_variable>` brought portable, standard-library concurrency primitives — no more relying on platform-specific APIs or third-party libraries for basic multithreading.
 
@@ -129,7 +207,6 @@ t.join();
 - `=default` / `=delete` — explicitly request or suppress compiler-generated special member functions
 - `std::tuple`, `std::array` — fixed-size, lighter-weight alternatives to existing containers
 - Unordered containers — `std::unordered_map`, `std::unordered_set` (hash-table backed)
-- Variadic templates — templates taking an arbitrary number of type parameters
 - `decltype` — deduces the type of an expression without evaluating it
 
 ## C++14
