@@ -211,7 +211,164 @@ t.join();
 
 ## C++14
 
-Coming soon.
+C++14 was a refinement release — it built on C++11 and knocked off rough edges rather than introducing another major overhaul. Features below are roughly ordered by how often they show up in day-to-day code.
+
+### 1. Generic lambdas
+
+A lambda parameter can be declared `auto`, making the lambda's call operator effectively a template — the same lambda body works across argument types.
+
+```cpp
+auto add = [](auto a, auto b) {
+    return a + b;
+};
+add(1, 2);       // int
+add(1.5, 2.5);   // double
+```
+
+Frequently used with STL algorithms where the same lambda gets reused across containers of different element types.
+
+### 2. `std::make_unique`
+
+```cpp
+auto emp = std::make_unique<Employee>("John");
+```
+
+`std::make_shared` already existed in C++11 — `make_unique` was simply left out, an oversight fixed in C++14. Beyond the cleaner syntax, it closes a real exception-safety hole: in something like `foo(std::unique_ptr<T>(new T), mightThrow())`, the order in which arguments are evaluated isn't guaranteed, so if `mightThrow()` runs and throws *after* `new T` but *before* the raw pointer is wrapped, that memory leaks — it was never given to anything that would clean it up. `make_unique` keeps allocation and ownership as a single, non-interruptible expression, so that gap can't happen.
+
+### 3. Return type deduction
+
+```cpp
+auto multiply(int a, int b) {
+    return a * b;
+}
+```
+
+Reduces boilerplate and eases refactoring, but with real restrictions worth knowing for interviews: every `return` statement in the function must deduce to the *same* type (or it's a compile error), and it can't be used on `virtual` functions — the compiler needs the full function body visible at the call site to deduce anything, which a virtual dispatch can't guarantee.
+
+### 4. `decltype(auto)`
+
+Deduces a type using `decltype`'s rules instead of `auto`'s — the difference matters because `auto` strips references and top-level `const`, while `decltype(auto)` preserves them exactly.
+
+```cpp
+int x = 10;
+int& getRef() { return x; }
+
+auto a = getRef();           // int   — auto strips the reference, copies x
+decltype(auto) b = getRef(); // int&  — reference preserved
+```
+
+Interview angle: this is the tool for writing generic forwarding wrappers that need to return *exactly* what the wrapped call returns — value, reference, or const reference — without accidentally collapsing it to a value.
+
+### 5. Generalized lambda capture (init capture)
+
+A capture can now declare and initialize a new variable with an arbitrary expression, not just reference an existing one — most notably, this makes move-only types capturable.
+
+```cpp
+auto ptr = std::make_unique<int>(42);
+
+auto func = [p = std::move(ptr)]() {
+    std::cout << *p;
+};
+```
+
+Common in asynchronous/callback code where a `unique_ptr` needs to transfer ownership into a closure.
+
+### 6. Relaxed `constexpr`
+
+C++11's `constexpr` functions were limited to a single `return` statement — no loops, no local variables, no mutation. C++14 relaxed that considerably.
+
+```cpp
+constexpr int factorial(int n) {
+    int result = 1;
+    for (int i = 2; i <= n; ++i)
+        result *= i;
+    return result;
+}
+```
+
+This made `constexpr` practical for real algorithms instead of just simple expressions, and laid the groundwork for the much heavier compile-time programming added in C++17/20.
+
+### 7. `[[deprecated]]` attribute
+
+A standard, portable way to mark a function, class, or variable as deprecated — any call site gets a compiler warning, without removing the symbol outright.
+
+```cpp
+[[deprecated("use newFunction() instead")]]
+void oldFunction();
+```
+
+### 8. `std::exchange`
+
+Sets a variable to a new value and returns its *old* value, in one call. Small utility, but it shows up constantly in move constructors and move-assignment operators to null out the moved-from object cleanly.
+
+```cpp
+MyClass(MyClass&& other) noexcept
+    : ptr(std::exchange(other.ptr, nullptr)) {}
+```
+
+### 9. Heterogeneous lookup in associative containers
+
+Passing the transparent comparator `std::less<>` lets you look up a `map`/`set` using a *different but comparable* type, without constructing a temporary of the container's actual key type first.
+
+```cpp
+std::map<std::string, int, std::less<>> m;
+m["hello"] = 1;
+
+auto it = m.find("hello");  // const char* — no temporary std::string built just to search
+```
+
+Interview angle: a genuine, measurable win on hot lookup paths, and a good signal of performance awareness in a review.
+
+### 10. Reader-writer locks
+
+`<shared_mutex>` brought reader-writer locking to the standard library: any number of threads can hold a shared (read) lock at once, while an exclusive (write) lock still locks out everyone else.
+
+```cpp
+#include <shared_mutex>
+
+std::shared_timed_mutex rw;
+
+void reader() {
+    std::shared_lock<std::shared_timed_mutex> lock(rw);  // multiple readers OK
+}
+void writer() {
+    std::unique_lock<std::shared_timed_mutex> lock(rw);  // exclusive
+}
+```
+
+Careful with the exact type here: C++14 only added `std::shared_timed_mutex` and `std::shared_lock`. The simpler, non-timed `std::shared_mutex` wasn't added until **C++17** — an easy detail to get backwards.
+
+### 11. Digit separators
+
+```cpp
+long population = 1'000'000;
+```
+
+Purely a readability aid — the single quote is ignored by the compiler, making large numeric literals easier to read at a glance and harder to mistype.
+
+### 12. Binary literals
+
+```cpp
+int mask = 0b10101010;
+```
+
+Combines naturally with digit separators for longer bit patterns: `0b1010'0110'0001'1101`.
+
+### 13. Variable templates
+
+A template that parameterizes a *variable* rather than a function or class — most commonly seen for compile-time constants that need to work across multiple types.
+
+```cpp
+template<typename T>
+constexpr T pi = T(3.1415926535897932385);
+
+float f = pi<float>;
+double d = pi<double>;
+```
+
+### Quick Reference: Most impactful day-to-day
+
+If you only remember five: **generic lambdas**, **`std::make_unique`**, **return type deduction**, **`decltype(auto)`**, and **generalized lambda capture** account for the bulk of C++14 usage in real codebases — the rest are smaller, situational conveniences.
 
 ## C++17
 
